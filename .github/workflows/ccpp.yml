@@ -5,7 +5,7 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: px4io/px4-dev-base-focal:2020-11-18
+    container: px4io/px4-dev-base-focal
     steps:
     - uses: actions/checkout@v2
       with:
