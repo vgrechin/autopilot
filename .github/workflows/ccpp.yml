@@ -1,0 +1,28 @@
+name: C/C++ CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: px4io/px4-dev-base-focal:2020-11-18
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        ssh-key: ${{ secrets.SSH_KEY }}
+        persist-credentials: false
+
+    - name: Get submodules
+      env:
+        GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
+      run: |
+        eval `ssh-agent -s`
+        echo "${{secrets.NEW_SSH_KEY}}" | ssh-add -
+        git submodule update --init --recursive
+    - name: make
+      run: |
+        git config --global credential.helper "" # disable the keychain credential helper
+        git config --global --add credential.helper store # enable the local store credential helper
+        echo "https://x-access-token:${{ secrets.ACCESS_TOKEN }}@github.com" >> ~/.git-credentials # add credential
+        git config --global url."https://github.com/".insteadof git@github.com: # credentials add credential
+        make
