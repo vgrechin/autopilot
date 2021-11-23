@@ -1,3 +1,4 @@
+GH_VERSION = $(shell gh --version)
 GIT_VERSION = $(shell git --version)
 GIT_BRANCH = $(shell git branch)
 GIT_DEBUG = $(shell git describe --always --tags --dirty --debug)
@@ -7,6 +8,7 @@ GIT_REVS = $(shell git rev-list --tags --max-count=1)
 GIT_TAG = $(shell git describe --always --tags --dirty)
 
 all:
+	@echo "GitHubCli version: $(GH_VERSION)"
 	@echo "Git version: $(GIT_VERSION)"
 	@echo "Git branch: $(GIT_BRANCH)"
 	@echo "Git debug: $(GIT_DEBUG)"
