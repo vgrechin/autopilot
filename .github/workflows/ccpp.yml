@@ -3,7 +3,7 @@ name: C/C++ CI
 on: [push]
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     container: px4io/px4-dev-base-focal:2020-11-18
     steps:
     - uses: actions/checkout@v2
